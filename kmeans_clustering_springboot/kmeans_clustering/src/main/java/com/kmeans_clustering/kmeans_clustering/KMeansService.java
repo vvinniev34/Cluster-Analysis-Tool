@@ -195,7 +195,7 @@ public class KMeansService {
 
     // calculate clusters and creates a new KMClust object to send to database
     // clusters have many to many relationship with KMData as we use label and nclust
-    // if key: label,nclust exits, return calculated value, otherwise recalculate
+    // if {key: label}/nclust exists, nclust exits and return previously calculated value, otherwise recalculate
     public int[] kmeansClustering(int nclust, int maxIterations, int label){
         KMData kmdata = kmdataRepository.findByLabel(label);
         int dataNData = kmdata.getNData();
