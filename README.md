@@ -1,9 +1,16 @@
 # Cluster-Analysis-Tool
-Cluster Analysis Tool
+Parallelized implementation of the k-means clustering algorithm to enable efficient cluster creation, editing, and visualization
 
-# Getting Started with Create React App
+# Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is an implementation of the k-means clustering algorithm, allowing users to easily cluster provided data points through the use of nmist datasets or forms along with individual data point uploads. Users will be able to view data points associated with each cluster and manipulate each data point as they like. 
+
+Examples of usage:
+- making groups out of similar interests
+- grouping similar households by electricity usage by month
+- stratifying types of users based upon usage
+
+Just tie the data point features with a value and the Cluster Analysis Tool will be able to cluster the most similar groups together. 
 
 ## Available Scripts
 
