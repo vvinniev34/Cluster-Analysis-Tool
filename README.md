@@ -16,25 +16,28 @@ This application is meant to run locally, but it may be hosted on a website in t
 
 # What's Contained
 
-**/kmeans_clustering_react**
-- react code for Cluster Analysis Tool frontend
-- interact with this code to cluster data points and upload
-- use normal npm commands to run and interact
+1. /kmeans_clustering_react
+    - React code for Cluster Analysis Tool frontend
+    - Interact with this code to cluster data points and upload
+    - Use normal npm commands to run and interact
 
-**/kmeans_clustering_springboot**
-- springboot code for Cluster Analysis Tool backend
-- runs in background while frontend runs locally
-- use typical java -jar commands or IDE to run locally on your device
-- currently needs to be ran locally in conjunction with the react frontend, but may be hosted in the future
+2. /kmeans_clustering_springboot
+    - Springboot code for Cluster Analysis Tool backend
+    - Runs in background while frontend runs locally
+    - Use typical java -jar commands or IDE to run locally on your device
+    - Currently needs to be ran locally in conjunction with the react frontend, but may be hosted in the future
 
-**/test_data**
-- test data provided for the user to use
-- files are formatted in a way program can read when uploaded to the cluster anyalysis tool
-- each line represents a data point with each column representing a feature it contains
+3. /test_data
+    - Test data provided for the user to use
+    - Files are formatted in a way program can read when uploaded to the cluster anyalysis tool
+    - Each line represents a data point with each column representing a feature it contains
 
 # How It Works
 
 A parallelized implementation of the k-means unsupervised ML algorithm is used to cluster data points. 
+
+**Standard K-Means Clustering Approach**
+
 Prior to entering the main algorithm, the following occurs first:
 
 1. User provides data points to the Cluster Analysis Tool to cluster and provides as input, the number of groups/clusters they want to make
@@ -54,3 +57,27 @@ At this point, the algorithm is ready to execute the main algorithm in which the
 3. If no changes are made, the algorithm has converged, and the loop is completed; However, if a change is made, we repeat these steps
 
 Once the algorithm converges and exits the loop, each data point is assigned to a cluster with the number of clusters matching the amount provided by the user. Clusters are organized by data point distance based upon their features. 
+
+**Necessary Concerns For Parallelization**
+
+The main concerns made when implementing parallization into a program were data dependencies, memory contention, load balances, efficiency vs parallelism, and most importantly, correctness and synchronization. 
+
+1. Data Dependencies
+    - Identifying and managing data dependencies is crucial. Some tasks may depend on the results of others, and proper synchronization and data handling are required to maintain correctness.
+    - Deadlocks can occur when multiple threads or processes are waiting for each other to release resources. Identifying and preventing deadlocks is crucial to the stability of a parallel program.
+
+2. Memory Contention
+    - Causes performance issues from competition for access to the same memory resources from multiple threads or processes along with possible unpredictable behavior or crashes
+
+3. Load Balances
+    - Uneven distribution of work among threads or processes can result in cores being underutilized while others are overloaded
+
+4. Efficiency vs Parallelism (Amdahl's Law)
+    - Important to strike a balance between parallelism and minimizing overhead to mantain efficiency.
+    - Parallelization is limited by the fraction of the code that cannot be parallelized.
+
+5. Correctness and Synchronization
+    - Ensuring that the parallelized program produces correct results is a primary concern. Concurrent execution can lead to race conditions, data inconsistencies, and other synchronization issues.
+    - Proper synchronization mechanisms such as locks and barriers must be used to control access to shared resources and coordinate threads or processes.
+
+**Changes Made For Parallelization**
