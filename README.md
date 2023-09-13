@@ -14,15 +14,15 @@ Just tie the data point features with a value and the Cluster Analysis Tool will
 
 This application is meant to run locally, but it may be hosted on a website in the future. 
 
-# What's In The Repo
+# What's Contained
 
 **/kmeans_clustering_react**
-- react code for cluster anlaysis tool frontend
+- react code for Cluster Analysis Tool frontend
 - interact with this code to cluster data points and upload
 - use normal npm commands to run and interact
 
 **/kmeans_clustering_springboot**
-- springboot code for cluster analysis tool backend
+- springboot code for Cluster Analysis Tool backend
 - runs in background while frontend runs locally
 - use typical java -jar commands or IDE to run locally on your device
 - currently needs to be ran locally in conjunction with the react frontend, but may be hosted in the future
@@ -31,3 +31,9 @@ This application is meant to run locally, but it may be hosted on a website in t
 - test data provided for the user to use
 - files are formatted in a way program can read when uploaded to the cluster anyalysis tool
 - each line represents a data point with each column representing a feature it contains
+
+# How It Works
+
+1. User provides data points to the Cluster Analysis Tool to cluster and provides as input, the number of groups/clusters they want to make
+2. The Spring Boot backend receives the data points and saves them into a PostgreSQl database
+3. 
