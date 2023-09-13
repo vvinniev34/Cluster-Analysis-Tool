@@ -34,6 +34,19 @@ This application is meant to run locally, but it may be hosted on a website in t
 
 # How It Works
 
+A parallelized implementation of the k-means unsupervised ML algorithm is used to cluster data points. 
+Prior to entering the main algorithm, the following occurs first:
+
 1. User provides data points to the Cluster Analysis Tool to cluster and provides as input, the number of groups/clusters they want to make
 2. The Spring Boot backend receives the data points and saves them into a PostgreSQl database
-3. 
+3. Each data point is randomly assigned to a cluster, with attempts to keep clusters relatively balanced at this point
+
+At this point, the algorithm is ready to execute the main algorithm in which the following steps are repeated until no changes are made to the clusters:
+
+1. Current cluster centers are calculated based upon which data points are assigned to them at this step
+2. Each data point's distance is compared to all calculated cluster centers using Euclidean distance formulas.
+  - If a different cluster center's distance is closer to the data point than the currently assigned cluster, we reassign the data point to that cluster
+  - If a change in assingment is made, we mark the change to check if the steps need to be repeated
+3. If no changes are made, the algorithm has converged, and the loop is completed; However, if a change is made, we repeat these steps
+
+Once the algorithm converges and exits the loop, each data point is assigned to a cluster with the number of clusters matching the amount provided by the user. Clusters are organized by data point distance based upon their features. 
