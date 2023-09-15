@@ -80,4 +80,34 @@ The main concerns made when implementing parallization into a program were data 
     - Ensuring that the parallelized program produces correct results is a primary concern. Concurrent execution can lead to race conditions, data inconsistencies, and other synchronization issues.
     - Proper synchronization mechanisms such as locks and barriers must be used to control access to shared resources and coordinate threads or processes.
 
-**Changes Made For Parallelization**
+**Parallelization Steps**
+
+1. Initialization
+    - The method starts by initializing cluster centroids and data assignments.
+    - Parallelism is skipped at this step due to computational overhead costs. Using typical computation method is faster in majority of cases unless an uncountable amount of data points is entered in as input. 
+
+3. Parallel Resetting of Cluster Features (ResetFeatures):
+    - This step resets cluster features to zero.
+    - Multiple threads (ResetFeatures) are created to perform this task in parallel. Each thread is responsible for resetting a portion of the cluster features.
+
+4. Parallel Summation of Data Point Features (SumFeatures):
+    - In this step, data point features are summed to calculate new cluster centroids.
+    - Multiple threads (SumFeatures) work in parallel, each handling a subset of the data points.
+    - Using locks (ReentrantLock) ensures that concurrent access to shared cluster feature data is synchronized to prevent data corruption.
+
+5. Parallel Division of Cluster Features (DivideFeatures):
+    - The cluster features are divided by the count of assigned data points.
+    - Multiple threads (DivideFeatures) perform this operation in parallel. Each thread processes a portion of the cluster features.
+
+6. Parallel Assignment of Data Points (AssignDataPoints):
+    - In this step, data points are reassigned to the nearest cluster centroid.
+    - Multiple threads (AssignDataPoints) are responsible for processing different subsets of data points.
+    - Each thread updates cluster counts (clustCounts) and tracks local changes (localNChanges) in parallel.
+    - Synchronization ensures that cluster counts are updated safely.
+
+7. Convergence Check and Iteration:
+    - After parallel assignment, a convergence check is performed to determine if further iterations are required.
+    - If any data points were reassigned (localNChanges > 0), the loop continues to the next iteration. Otherwise, it exits.
+
+8. Saving Results:
+    - The method saves the updated cluster information, but this part is not inherently parallel as it deals with database interactions and data storage.
